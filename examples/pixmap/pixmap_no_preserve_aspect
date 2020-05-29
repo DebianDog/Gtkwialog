@@ -1,0 +1,15 @@
+#! /bin/sh
+# Needs test.jpg image in script start directory
+
+export MAIN_DIALOG='
+<window>
+  <vbox>
+    <pixmap preserve-aspect-ratio="false">
+      <variable>IMAGEN</variable>
+      <width>600</width>
+      <height>60</height>
+      <input file>./test.jpg</input>
+    </pixmap>
+  </vbox>
+</window>'
+gtkwialog  -p MAIN_DIALOG

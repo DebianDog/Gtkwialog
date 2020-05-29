@@ -1,0 +1,116 @@
+Gtkwialog is a fork of Gtkdialog, which provides alternative
+<action> and <input> commandlinestring exec modes.
+
+This bash_default version of gtkwialog always uses bash for
+the execution of action and input commandstrings, which allows such 
+legacy gtkdialog apps to be run without modification on distributions
+that use ash or dash or similar as their system shells. If you want
+to force legacy gtkdialog /bin/sh instead, you should start
+the gtkwialog applications via environment variable 
+GTKWMODE=S mode, as specified below For example, to run pFind,
+in legacy /bin/sh mode, start it with:
+
+env GTKWMODE=S pfind
+
+or alternatively, export GTKWMODE=S earlier into the environment.
+
+Naturally, if the main script employs bash functionality (bashisms),
+such as export -f functionname, than the script shebang used must be
+#!/bin/bash.
+
+With no additional options specified via the environment, commandline
+arguments or inline <action> or <input> commands, the default mode
+of gtkwialog is 100% drop-in replacement for legacy gtkdialog. That
+mode can be changed, in increasing order of precedence, by:
+
+1. setting optional environment variable GTKWMODE=?, where ? can be
+   a for glib async non-blocking (internally uses no shell process);
+   b for glib sync blocking (internally uses no shell process);
+   B to force /bin/bash with modded legacy system calls;
+   unset, S, or anything else, means use "default mode", which is 
+   drop-in 100% legacy gtkdialog compatible exec mode (i.e. /bin/sh).
+
+2. The environment exec mode can be overwritten by cmdline args:
+   -a for glib async non-blocking; -b for glib sync blocking mode.
+   No commandline option is provides for B mode (so set GTKWMODE if you
+   want that mode for whole dialog). Legacy gtkdialog mode is otherwise
+   the default mode anyway.
+
+3. Any action/input exec mode can be overwritten by inline <action> or 
+   <input> args:
+
+   -a; -b; -B to uses /bin/bash with modded system calls; -S to use
+   legacy /bin/sh mode.
+
+The information below also applies for Gtkwialog:
+------------------------------------------------
+
+Gtkdialog - A small utility for fast and easy GUI building
+
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 2 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License along
+with this program; if not, write to the Free Software Foundation, Inc.,
+51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+
+Downloading the Source Code
+===========================
+
+Get it from here:
+    http://code.google.com/p/gtkdialog/downloads/list
+
+Get the latest revision from SVN (always stable):
+    svn checkout http://gtkdialog.googlecode.com/svn/trunk/ gtkdialog
+
+Get an older revision from SVN:
+    svn checkout -r432 http://gtkdialog.googlecode.com/svn/trunk/ gtkdialog
+
+Compilation and Installation
+============================
+
+From a Source Package
+---------------------
+
+    ./configure [configure-options]
+    make
+    make install
+
+From SVN
+--------
+
+    ./autogen.sh [configure-options]
+    make
+    make install
+
+The doc/reference/* and examples/* don't install by default so you might
+like to copy them somewhere.
+
+Support for using Glade generated user interfaces is very old and I'd
+rather not encourage folk to create Gtkdialog applications in this way.
+
+VTE
+---
+Gtkdialog's configure script will compile-in support for the Virtual
+Terminal Emulator if it finds libvte and its development headers.
+libvte source package -> http://ftp.gnome.org/pub/GNOME/sources/vte/
+
+ARM
+---
+A problem was encountered when compiling on the ARM platform whereby the
+widgets were being packed in the wrong order and I have applied a fix for
+this wrapped in an #ifdef __arm__ preprocessor macro in automaton.c.
+
+Contacting Us
+=============
+
+http://code.google.com/p/gtkdialog/
+
+2013-01-06
