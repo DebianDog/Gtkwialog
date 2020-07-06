@@ -45,7 +45,12 @@ static char sccsid[] = "@(#)system_bash.c	5.10.1 (2.11BSD) 1999/10/24";
 system_bash(command)
 	char *command;
 {
-	union wait pstat;
+//	union wait pstat;
+	union test1 { 
+		int w_status; 
+		int w_retcode; 
+	} pstat; 
+
 	register int pid;
 	sigset_t omask, nmask;
 	int (*intsave)(), (*quitsave)();
